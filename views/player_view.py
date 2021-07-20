@@ -25,6 +25,35 @@ class PlayerView(QWidget):
         pal = QPalette(QColor(14079702));
         self.setPalette(pal)
 
+        self.setStyleSheet("""QPushButton {
+                            background: rgb(205, 205, 205);
+                            border: 1px solid #828282;
+                            border-radius : 8px;
+                            font-family: \"IntelOne Display Light\"; /* Text font family */
+                            font-size: 12pt; /* Text font size */
+                        }
+                        QPushButton:hover {
+                            background: rgba(144, 200, 246, 155);
+                            border-color: #828282;
+                            border-width: 1px;
+                            border-radius : 8px;
+                            color: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop: 0 rgb(32, 47, 130), stop: 0.5 rgb(32, 47, 130), stop:1 rgb(32, 47, 130));
+                        }
+                        QPushButton:pressed,
+                        QPushButton:checked
+                        {
+                            background: rgba(144, 200, 246, 155);
+                            border-color: #828282;
+                            border-style: solid;
+                            border-width: 1px;
+                            border-radius : 8px;
+                            color: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop: 0 rgb(32, 47, 130), stop: 0.5 rgb(32, 47, 130), stop:1 rgb(32, 47, 130));
+                        }
+                        """
+                    )
+
         self.layout().setRowStretch(0, 2)
         self.layout().setRowStretch(1, 5)
         self.layout().setRowStretch(2, 2)

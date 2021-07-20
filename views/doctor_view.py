@@ -15,7 +15,7 @@ from records_view import RecordsView
 from brain_map_view import BrainMapView
 
 class DoctorView(FramelessWidget):
-    def __init__(self, menuBarView, recordsView, playerView, pictureView):
+    def __init__(self, menuBarView, recordsView, brainMapView, playerView, pictureView):
         super().__init__()
         layout = QGridLayout()
         self.setLayout(layout)
@@ -49,7 +49,6 @@ class DoctorView(FramelessWidget):
         recordsView.setMinimumSize(QSize(300, 200))
         layout.addWidget(recordsView, 1, 0)
 
-        brainMapView = BrainMapView()
         brainMapView.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         brainMapView.setMinimumSize(QSize(300, 200))
         layout.addWidget(brainMapView, 2, 0)
