@@ -7,7 +7,7 @@ from PyQt6.QtCore import QRect, QRectF, QSize, pyqtSlot, pyqtSignal
 # remember to get property for background equal to color of parent widget. (for qss?)
 class PlayerView(QWidget):
 
-    invalideLastRecord = pyqtSignal(name='invalideLastRecord')
+    invalidateLastRecord = pyqtSignal(name='invalidateLastRecord')
 
     class State(enum.Enum):
         Init = 0
@@ -91,7 +91,7 @@ class PlayerView(QWidget):
     @pyqtSlot(bool)
     def on_invalidateButton_clicked(self):
         print("invalidate clicked!")
-        self.invalideLastRecord.emit()
+        self.invalidateLastRecord.emit()
         self.viewmodel.handleInvalidateButton()
 
     @pyqtSlot(bool)

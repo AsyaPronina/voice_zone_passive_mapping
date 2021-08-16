@@ -17,7 +17,7 @@ class PictureView(QWidget):
 
         self.state = PictureView.State.Init
 
-        uic.loadUi(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\views\picture_preview.ui', self)
+        uic.loadUi(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\views\picture_view.ui', self)
         self.setWindowOpacity(1.0)
         self.setAutoFillBackground(True)
         pal = QPalette(QColor(14079702))

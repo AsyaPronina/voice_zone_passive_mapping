@@ -103,7 +103,7 @@ class RecordsView(QWidget):
         self.timer.start()
 
     @pyqtSlot()
-    def handleInvalideLastRecord(self):
+    def handleInvalidateLastRecord(self):
         if self.lastRecordWidget != None:
             self.lastRecordWidget.invalidate()
         print('records: invalidate last record')

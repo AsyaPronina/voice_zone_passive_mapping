@@ -1,7 +1,8 @@
 import enum
+import PyQt6
 from PyQt6 import uic, QtCore
 from PyQt6.QtWidgets import QWidget, QPushButton, QTextEdit, QSizePolicy, QGridLayout, QMenu, QStyleOption, QStyle, QFileDialog
-from PyQt6.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QRegion, QIcon, QAction
+from PyQt6.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QRegion, QIcon, QAction, QPixmap
 from PyQt6.QtCore import QRect, QRectF, QLineF, QPointF, QSize, pyqtSlot
 
 import json
@@ -25,15 +26,18 @@ class ConfigureView(FramelessWidget):
         self.setWindowFlags(QtCore.Qt.WindowFlags.FramelessWindowHint)
         self.setBorderMargin(5)
         self.setCornerMargin(20)
-        self.resize(600, 400)
+        self.resize(1000, 600)
 
         self.layout().setSpacing(20)
         self.layout().setVerticalSpacing(20)
         self.layout().setContentsMargins(35, 35, 35, 35)
+        self.layout().setColumnStretch(2, 4)
+        self.layout().setColumnStretch(3, 8)
 
         #"background-color: #FAFAFA; /* background color */"
         self.setStyleSheet("""QWidget { border-radius : 5px; }
                               QPushButton {
+                                  background: rgb(210, 210, 210);
                                   border: 1px solid black;
                                   border-radius : 0px;
                               }
@@ -49,22 +53,45 @@ class ConfigureView(FramelessWidget):
                                   border-radius : 0px;
                               }
                               QLabel {
-                                  color: black; /* text color */}
-                              QLabel#label_3 {
+                                  color: black; /* text color */
+                                  border-radius: 5px; }
+                              QLabel#cfgActsScript {
                                   font-family: \"Century Gothic\"; /* Text font family */
-                                  font-size: 10.5pt; /* Text font size */}
-                              QLabel#label_4 {
+                                  font-size: 12pt; /* Text font size */}
+                              QLabel#cfgObjsScript {
                                   font-family: \"Century Gothic\"; /* Text font family */
-                                  font-size: 10.5pt; /* Text font size */}
-                              QLabel#label {
+                                  font-size: 12pt; /* Text font size */}
+                              QLabel#actsPicLabel {
+                                  border: 1px solid #828282;
+                                  border-radius: 5px;
+                                  background: white; }
+                              QLabel#actsPicPreview {
+                                  border: 1px solid #828282;
+                                  border-radius: 15px;
+                                  background: white }
+                              QLabel#actsTimeout {
                                   padding-left: 15px;
                                   padding-right: 15px;
                                   border-radius: 5px; }
-                              QLabel#label_2 {
+                              QLabel#objsPicLabel {
+                                  border: 1px solid #828282;
+                                  border-radius: 5px;
+                                  background: white; }
+                              QLabel#objsPicPreview {
+                                  border: 1px solid #828282;
+                                  border-radius: 15px;
+                                  background: white }
+                              QLabel#objsTimeout {
                                   padding-left: 15px;
                                   padding-right: 15px;
                                   border-radius: 5px; }"""
                            )
+
+        self.actionsList.itemSelectionChanged.connect(self.actionsPicSelectionChanged)
+        self.objectsList.itemSelectionChanged.connect(self.objectsPicSelectionChanged)
+
+        self.actionsPreviewPixmap = self.actsPicPreview.pixmap()
+        self.objectsPreviewPixmap = self.objsPicPreview.pixmap()
 
         self.viewmodel = viewmodel
         self.actionsPictures = []
@@ -107,6 +134,20 @@ class ConfigureView(FramelessWidget):
     def on_browseObjects_clicked(self):
         self.browseClicked(self.objectsTimeoutSpinBox, self.objectsList,
                            self.objectsTimeout, self.objectsPictures, self.objectsLabels)
+
+    @pyqtSlot()
+    def actionsPicSelectionChanged(self):
+        item = self.actionsList.selectedItems()
+        row = self.actionsList.row(item[0])
+        print("Selected item: ", row)
+
+        self.actsPicLabel.setText(self.actionsLabels[row])
+        self.actionsPreviewPixmap = QPixmap(self.actionsPictures[row])
+        self.actsPicPreview.setPixmap(self.adjustPixmapToRectSize(self.actionsPreviewPixmap, self.layout().cellRect(2, 2)))
+
+    @pyqtSlot()
+    def objectsPicSelectionChanged(self):
+        print("Selected items: ", self.objectsList.selectedItems())
 
     @pyqtSlot(bool)
     def on_applyButton_clicked(self):
@@ -151,15 +192,30 @@ class ConfigureView(FramelessWidget):
         painter.strokePath(innerPath, QPen(QColor(8553090), 0.5))
 
         painter.setPen(QPen(QColor(16448250), 4))
-        painter.drawLine(QLineF(QPointF(rect.width() / 2 + 19, rect.top() + 20),
-                                QPointF(rect.width() / 2 + 19, rect.bottom() - 50)))
+        painter.drawLine(QLineF(QPointF(rect.left() + 20 , rect.height() / 2 - 9),
+                                QPointF(rect.right() - 20, rect.height() / 2 - 9)))
 
         painter.setPen(QPen(QColor(7697781), 0.5))
-        painter.drawLine(QLineF(QPointF(rect.width() / 2 + 19, rect.top() + 20),
-                                QPointF(rect.width() / 2 + 19, rect.bottom() - 50)))
+        painter.drawLine(QLineF(QPointF(rect.left() + 20, rect.height() / 2 - 9),
+                                QPointF(rect.right() - 20, rect.height() / 2 - 9)))
 
         self.style().drawPrimitive(QStyle.PrimitiveElement.PE_Widget, opt, painter, self)
 
     def keyPressEvent(self, event):
         if event.keyCombination().key() == QtCore.Qt.Key.Key_Escape:
             self.close()
+
+    def resizeEvent(self, event):
+        rect = self.layout().cellRect(2, 2)
+
+        self.actsPicPreview.setPixmap(self.adjustPixmapToRectSize(self.actionsPreviewPixmap, rect))
+        self.objsPicPreview.setPixmap(self.adjustPixmapToRectSize(self.objectsPreviewPixmap, rect))
+
+    def adjustPixmapToRectSize(self, pixmap, rect):
+        rect.adjust(15, 15, -15, -15)
+
+        if pixmap != None:
+            return pixmap.scaled(rect.size(), PyQt6.QtCore.Qt.AspectRatioMode.KeepAspectRatio,
+                                              PyQt6.QtCore.Qt.TransformationMode.SmoothTransformation)
+
+        return None

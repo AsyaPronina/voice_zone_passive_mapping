@@ -60,7 +60,7 @@ class DoctorView(FramelessWidget):
         playerView.setMinimumSize(QSize(300, 200))
         layout.addWidget(playerView, 1, 1)
 
-        playerView.invalideLastRecord.connect(recordsView.handleInvalideLastRecord)
+        playerView.invalidateLastRecord.connect(recordsView.handleInvalidateLastRecord)
 
         pictureView.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         pictureView.setMinimumSize(QSize(300, 200))
