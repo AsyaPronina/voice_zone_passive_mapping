@@ -1,8 +1,8 @@
 import PyQt6
 from PyQt6 import uic, QtWidgets
 from PyQt6.QtWidgets import QGridLayout, QWidget, QPushButton, QLabel, QStyle, QStyleOption, QSizePolicy, QGraphicsScene, QGraphicsView
-from PyQt6.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QPixmap
-from PyQt6.QtCore import Qt, QRect, QRectF, QSize, pyqtSlot
+from PyQt6.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QFont
+from PyQt6.QtCore import Qt, QRect, QRectF, QSize, QPointF, pyqtSlot
 
 import numpy as np
 
@@ -103,6 +103,9 @@ class BrainMapView(QWidget):
                 for row in range(0, 8):
                     for col in range(0, 8):
                         scene.addRect(QRectF(row * 1000, col * 1000, 1000, 1000))
+                        # Transpose view of real matrix??
+                        text = scene.addText(str(col * 8 + row + 1), QFont("IntelOne Display Light", 200, 30, True))
+                        text.setPos(QPointF(row * 1000, col * 1000))
 
                 scene.setSceneRect(scene.itemsBoundingRect())
 
@@ -268,7 +271,7 @@ class BrainMapView(QWidget):
                     g = cvt(colorStart.green(), colorEnd.green(), map[j * 8 + k])
                     b = cvt(colorStart.blue(), colorEnd.blue(), map[j * 8 + k])
                     color = QColor(r, g, b)
-                    scene.items(Qt.SortOrder.AscendingOrder)[k * 8 + j].setBrush(QBrush(color))
+                    scene.items(Qt.SortOrder.AscendingOrder)[(k * 8 + j) * 2].setBrush(QBrush(color))
 
     @pyqtSlot()
     def handleExperimentCleaned(self):
@@ -279,4 +282,4 @@ class BrainMapView(QWidget):
 
                 for j in range(0, 8):
                     for k in range(0, 8):
-                        scene.items(Qt.SortOrder.AscendingOrder)[k * 8 + j].setBrush(QBrush(QColor(255, 255, 255)))
+                        scene.items(Qt.SortOrder.AscendingOrder)[(k * 8 + j) * 2].setBrush(QBrush(QColor(255, 255, 255)))

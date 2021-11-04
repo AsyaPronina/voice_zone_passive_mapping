@@ -78,69 +78,24 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="3" column="3">
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
-     <item>
-      <widget class="QPushButton" name="actsRemovePic">
-       <property name="text">
-        <string>Remove from script</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="actsNextPic">
-       <property name="text">
-        <string>Next &gt;&gt;</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="8" column="3">
-    <layout class="QHBoxLayout" name="horizontalLayout_6">
-     <item>
-      <widget class="QPushButton" name="objsRemovePic">
-       <property name="text">
-        <string>Remove from script</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="objsNextPic">
-       <property name="text">
-        <string>Next &gt;&gt;</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="6" column="2" rowspan="3">
-    <widget class="QListWidget" name="objectsList"/>
-   </item>
-   <item row="4" column="2" colspan="2">
-    <widget class="QSpinBox" name="actionsTimeoutSpinBox"/>
-   </item>
-   <item row="5" column="1" colspan="3">
-    <widget class="QLabel" name="cfgObjsScript">
+   <item row="0" column="0" colspan="4">
+    <widget class="QLabel" name="cfgActsScript">
      <property name="text">
-      <string>Configure Objects script</string>
+      <string>Configure Actions script</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
-   <item row="1" column="3">
-    <widget class="QLabel" name="actsPicLabel">
+   <item row="2" column="0" colspan="2">
+    <widget class="QPushButton" name="browseActions">
      <property name="text">
-      <string>Picture label</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <string>Browse</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
+   <item row="5" column="1">
     <widget class="QLabel" name="actsTimeout">
      <property name="font">
       <font>
@@ -161,64 +116,20 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="3">
-    <widget class="QLabel" name="objsPicPreview">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>300</width>
-       <height>200</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>100000</width>
-       <height>100000</height>
-      </size>
-     </property>
+   <item row="1" column="3">
+    <widget class="QLabel" name="actsPicLabel">
      <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>../resources/Picture_preview.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>false</bool>
+      <string>Picture label</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
-   <item row="1" column="2" rowspan="3">
-    <widget class="QListWidget" name="actionsList"/>
+   <item row="5" column="2">
+    <widget class="QSpinBox" name="actionsTimeoutSpinBox"/>
    </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QPushButton" name="browseActions">
-     <property name="text">
-      <string>Browse</string>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="2" colspan="2">
-    <widget class="QSpinBox" name="objectsTimeoutSpinBox"/>
-   </item>
-   <item row="0" column="0" colspan="4">
-    <widget class="QLabel" name="cfgActsScript">
-     <property name="text">
-      <string>Configure Actions script</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="1" colspan="3">
+   <item row="6" column="1" colspan="3">
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="5,5">
      <property name="spacing">
       <number>15</number>
@@ -241,37 +152,6 @@
       </widget>
      </item>
     </layout>
-   </item>
-   <item row="9" column="1">
-    <widget class="QLabel" name="objsTimeout">
-     <property name="font">
-      <font>
-       <family>Nirmala UI</family>
-      </font>
-     </property>
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-     <property name="text">
-      <string>Timeout</string>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="3">
-    <widget class="QLabel" name="objsPicLabel">
-     <property name="text">
-      <string>Picture label</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
    </item>
    <item row="2" column="3">
     <widget class="QLabel" name="actsPicPreview">
@@ -307,12 +187,38 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="0" colspan="2">
-    <widget class="QPushButton" name="browseObjects">
-     <property name="text">
-      <string>Browse</string>
-     </property>
-    </widget>
+   <item row="3" column="3" rowspan="3">
+    <layout class="QHBoxLayout" name="previewLayout">
+     <item>
+      <widget class="QPushButton" name="previewButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="excludeButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>EXCLUDE</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="2" rowspan="4">
+    <widget class="QListWidget" name="actionsList"/>
    </item>
   </layout>
  </widget>

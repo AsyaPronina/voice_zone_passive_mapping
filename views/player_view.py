@@ -69,7 +69,7 @@ class PlayerView(QWidget):
 
     # multiple times called pause -> leads to bug
     def pause(self):
-        self.playButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\play.jpg'))
+        self.playButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\play.png'))
         self.state = PlayerView.State.Paused
 
     @pyqtSlot(bool)
@@ -114,7 +114,7 @@ class PlayerView(QWidget):
 
     @pyqtSlot()
     def handleEndOfStream(self):
-        self.playButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\play.jpg'))
+        self.playButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\play.png'))
         self.state = PlayerView.State.Init
 
     def paintEvent(self, event):

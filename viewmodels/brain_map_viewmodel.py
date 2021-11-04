@@ -1,5 +1,8 @@
-from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
+import random
+
 from numpy import matrix
+
+from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
 
 class BrainMapViewModel(QObject):
     model = None
@@ -24,7 +27,7 @@ class BrainMapViewModel(QObject):
         fakeMap = []
         for i in range(0, 8):
             for j in range(0, 8):
-                fakeMap.append(0.1)
+                fakeMap.append(0.1 + random.uniform(0.02, 0.07)) 
         
         for i in range(6, 8):
             for j in range(0, 8):
