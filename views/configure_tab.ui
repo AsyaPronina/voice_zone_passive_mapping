@@ -79,7 +79,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0" colspan="4">
-    <widget class="QLabel" name="cfgActsScript">
+    <widget class="QLabel" name="cfgScriptLabel">
      <property name="text">
       <string>Configure Actions script</string>
      </property>
@@ -88,36 +88,14 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QPushButton" name="browseActions">
-     <property name="text">
-      <string>Browse</string>
-     </property>
-    </widget>
+   <item row="1" column="2" rowspan="4">
+    <widget class="QListWidget" name="picturesListWidget"/>
    </item>
-   <item row="5" column="1">
-    <widget class="QLabel" name="actsTimeout">
-     <property name="font">
-      <font>
-       <family>Nirmala UI</family>
-      </font>
-     </property>
-     <property name="text">
-      <string>Timeout</string>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-     <property name="margin">
-      <number>10</number>
-     </property>
-    </widget>
+   <item row="5" column="2">
+    <widget class="QSpinBox" name="timeoutSpinBox"/>
    </item>
    <item row="1" column="3">
-    <widget class="QLabel" name="actsPicLabel">
+    <widget class="QLabel" name="pictureLabel">
      <property name="text">
       <string>Picture label</string>
      </property>
@@ -126,35 +104,51 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="2">
-    <widget class="QSpinBox" name="actionsTimeoutSpinBox"/>
-   </item>
-   <item row="6" column="1" colspan="3">
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="5,5">
-     <property name="spacing">
-      <number>15</number>
-     </property>
-     <property name="topMargin">
-      <number>15</number>
-     </property>
+   <item row="3" column="3" rowspan="3">
+    <layout class="QHBoxLayout" name="previewLayout">
      <item>
-      <widget class="QPushButton" name="applyButton">
+      <widget class="QPushButton" name="previewButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
-        <string>Apply</string>
+        <string/>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="cancelButton">
+      <widget class="QPushButton" name="nextButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
-        <string>Cancel</string>
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="excludeButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>EXCLUDE</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
    <item row="2" column="3">
-    <widget class="QLabel" name="actsPicPreview">
+    <widget class="QLabel" name="picturePreview">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -187,38 +181,33 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="3" rowspan="3">
-    <layout class="QHBoxLayout" name="previewLayout">
-     <item>
-      <widget class="QPushButton" name="previewButton">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="excludeButton">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>EXCLUDE</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+   <item row="2" column="0" colspan="2">
+    <widget class="QPushButton" name="browseButton">
+     <property name="text">
+      <string>Browse</string>
+     </property>
+    </widget>
    </item>
-   <item row="1" column="2" rowspan="4">
-    <widget class="QListWidget" name="actionsList"/>
+   <item row="5" column="1">
+    <widget class="QLabel" name="timeoutLabel">
+     <property name="font">
+      <font>
+       <family>Nirmala UI</family>
+      </font>
+     </property>
+     <property name="text">
+      <string>Timeout</string>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="margin">
+      <number>10</number>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
