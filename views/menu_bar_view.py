@@ -106,9 +106,9 @@ class MenuBarView(QWidget):
     def configureExperiment(self):
         print("conflgure clicked!")
         self.viewmodel.stopScript()
-        self.window = ConfigureView(ConfigureViewModel(self.viewmodel.getModel()),
-                                    ConfigureScriptViewModel(PreviewModel(), self.viewmodel.getModel()),
-                                    ConfigureScriptViewModel(PreviewModel(), self.viewmodel.getModel()))
+        #hack
+        vm = ConfigureScriptViewModel(PreviewModel(), self.viewmodel.getModel())
+        self.window = ConfigureView(ConfigureViewModel(self.viewmodel.getModel()), vm, vm)
         self.window.show()
 
     @pyqtSlot()
