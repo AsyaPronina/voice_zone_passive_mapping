@@ -105,9 +105,9 @@
     </widget>
    </item>
    <item row="3" column="3" rowspan="3">
-    <layout class="QHBoxLayout" name="previewLayout">
+    <layout class="QHBoxLayout" name="buttonsLayout">
      <item>
-      <widget class="QPushButton" name="previewButton">
+      <widget class="QPushButton" name="playButton">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>

@@ -1,5 +1,10 @@
 import enum
+
+from models.preview_model import PreviewModel
+from viewmodels.configure_script_viewmodel import ConfigureScriptViewModel
+
 from viewmodels.configure_viewmodel import ConfigureViewModel
+
 from PyQt6 import uic, QtCore
 from PyQt6.QtWidgets import QWidget, QPushButton, QTextEdit, QSizePolicy, QHBoxLayout, QMenu
 from PyQt6.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QRegion, QIcon, QAction
@@ -101,8 +106,10 @@ class MenuBarView(QWidget):
     def configureExperiment(self):
         print("conflgure clicked!")
         self.viewmodel.stopScript()
-        window = ConfigureView(ConfigureViewModel(self.viewmodel.getModel()))
-        window.show()
+        self.window = ConfigureView(ConfigureViewModel(self.viewmodel.getModel()),
+                                    ConfigureScriptViewModel(PreviewModel(), self.viewmodel.getModel()),
+                                    ConfigureScriptViewModel(PreviewModel(), self.viewmodel.getModel()))
+        self.window.show()
 
     @pyqtSlot()
     def onCloseButtonClicked(self):

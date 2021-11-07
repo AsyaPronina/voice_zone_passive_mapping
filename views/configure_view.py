@@ -12,7 +12,7 @@ from frameless_widget import FramelessWidget
 from configure_tab import ConfigureTab
 
 class ConfigureView(FramelessWidget):
-    def __init__(self, viewmodel):
+    def __init__(self, viewmodel, actionsViewModel, objectsViewModel):
         super().__init__()
 
         self.state = FramelessWidget.State.Init
@@ -33,17 +33,17 @@ class ConfigureView(FramelessWidget):
         self.cfgGridLayout.setVerticalSpacing(20)
         self.cfgGridLayout.setContentsMargins(15, 15, 15, 15)
 
-        # self.actionsViewModel
-        # self.objectsViewModel
-        self.actionsTab = ConfigureTab(viewmodel, 0, "Actions")
-        self.objectsTab = ConfigureTab(viewmodel, 1, "Objects")
+        self.actionsViewModel = actionsViewModel
+        self.objectsViewModel = objectsViewModel
+        self.actionsTab = ConfigureTab(self.actionsViewModel, 0, "Actions")
+        self.objectsTab = ConfigureTab(self.objectsViewModel, 1, "Objects")
         self.actionsTab.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.objectsTab.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         # QtCore.Qt.Alignment.AlignCenter) ?
         self.actionsTab.setMinimumSize(QSize(1000, 600))
         self.objectsTab.setMinimumSize(QSize(1000, 600))
-        self.cfgGridLayout.addWidget(self.actionsTab, 0, 0)
         self.cfgGridLayout.addWidget(self.objectsTab, 0, 0)
+        self.cfgGridLayout.addWidget(self.actionsTab, 0, 0)
 
         self.tabsLayout = QHBoxLayout()
         switchers = [QPushButton(), QPushButton()]
@@ -94,6 +94,8 @@ class ConfigureView(FramelessWidget):
         #self.applyCancelLayout.setAlignment(self.cancelButton, QtCore.Qt.Alignment.AlignVCenter | QtCore.Qt.Alignment.AlignLeft)
         self.cancelButton.setMinimumSize(100, 23)
 
+        self.viewmodel = viewmodel
+
     def onActionsButtonClicked(self):
         self.cfgGridLayout.removeWidget(self.actionsTab)
         self.actionsTab.setParent(None)
@@ -124,12 +126,15 @@ class ConfigureView(FramelessWidget):
 
     @pyqtSlot(bool)
     def on_applyButton_clicked(self):
-        # self.actionsTimeout = self.actionsTimeoutSpinBox.value()
-        # self.viewmodel.handleApplyButton(self.actionsPictures, self.actionsLabels, self.actionsTimeout)
+        self.viewmodel.handleApplyButton(self.actionsViewModel.getPictures(), self.actionsViewModel.getLabels(),
+                                         self.actionsViewModel.getTimeout())
+        self.actionsViewModel.cleanPreview()
         self.close()
 
     @pyqtSlot(bool)
     def on_cancelButton_clicked(self):
+        self.viewmodel.handleCancelButton()
+        self.actionsViewModel.cleanPreview()
         self.close()
 
     def paintEvent(self, event):

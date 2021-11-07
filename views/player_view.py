@@ -63,22 +63,12 @@ class PlayerView(QWidget):
         self.viewmodel.paused.connect(self.handlePaused)
         self.viewmodel.endOfStream.connect(self.handleEndOfStream)
 
-    def play(self):
-        self.playButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\pause.png'))
-        self.state = PlayerView.State.Playing
-
-    # multiple times called pause -> leads to bug
-    def pause(self):
-        self.playButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\play.png'))
-        self.state = PlayerView.State.Paused
-
     @pyqtSlot(bool)
     def on_playButton_clicked(self):
         if self.state != PlayerView.State.Playing:
-            self.play()
             self.viewmodel.handlePlayButton()
         else:
-            self.pause()
+            # multiple times called pause -> leads to bug
             self.viewmodel.handlePauseButton()
 
     @pyqtSlot(bool)
@@ -90,30 +80,35 @@ class PlayerView(QWidget):
 
     @pyqtSlot(bool)
     def on_invalidateButton_clicked(self):
-        print("invalidate clicked!")
+        print("player: invalidate clicked!")
         self.invalidateLastRecord.emit()
         self.viewmodel.handleInvalidateButton()
 
     @pyqtSlot(bool)
     def on_actionsButton_clicked(self):
-        print("actions clicked!")
+        print("player: actions clicked!")
         #self.restore()
 
     @pyqtSlot(bool)
     def on_objectsButton_clicked(self):
-        print("objects clicked!")
+        print("player: objects clicked!")
         #self.restore()
 
     @pyqtSlot()
     def handlePlaying(self):
-        self.play()
+        print("player: playing")
+        self.playButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\pause.png'))
+        self.state = PlayerView.State.Playing
 
     @pyqtSlot()
     def handlePaused(self):
-        self.pause()
+        print("player: pause")
+        self.playButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\play.png'))
+        self.state = PlayerView.State.Paused
 
     @pyqtSlot()
     def handleEndOfStream(self):
+        print("player: end of stream")
         self.playButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\play.png'))
         self.state = PlayerView.State.Init
 
