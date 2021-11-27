@@ -28,3 +28,6 @@ Python GUI for Voice Zone Passive Mapping
     python tool.py
     ```
     You are ready to edit it!
+
+## Map of UI and Python classes:
+![image](https://user-images.githubusercontent.com/15359579/143721501-e13522cc-73c7-45b7-a640-50eb60271f44.png)
