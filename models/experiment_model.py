@@ -2,6 +2,14 @@ from PyQt5.QtCore import QObject, QTimer, pyqtSignal, pyqtSlot
 
 from resources import resources
 
+
+import sys
+
+sys.path.append('models/recording_model')
+from models.recording_model.recording_model import RecordingModel
+sys.path.append('models/sc_mapping_model')
+from models.sc_mapping_model.sc_mapping_model import SCMappingModel
+
 import enum
 
 # InitState -> pyqtSignal INIT to unblock all buttons in all views.
@@ -43,6 +51,9 @@ class ExperimentModel(QObject):
         self.timer.setSingleShot(True)
         self.timer.timeout.connect(self.__playNextPicture)
 
+        self.recordingModel = None
+        self.scMappingModel = None
+
     def setPictures(self, pictures):
         self.pictures = pictures
 
@@ -71,6 +82,25 @@ class ExperimentModel(QObject):
         if self.state == ExperimentModel.State.Init:
             self.state = ExperimentModel.State.Playing
             self.__playNextPicture()
+            # Start patient display model. (It should work via bluetooth client)
+            # Activate Display if not debugging or if debugging with stream from LSL_Generator
+            # if toolConfig.Mode == ToolConfig.Mode.Debug or toolConfig.LSLOutletRandom:
+                # patient_display = Display(config, qs)
+                # patient_display.start()
+            # Ensure somehow that patient display is started successfully.
+
+            # Create and start recording model and track recorder thread as decoder thread depends on it!
+                # recorder = Recorder(config, qs)
+                # recorder.record()
+                # recorder.start()
+
+            self.recordingModel = RecordingModel(self.toolConfig)
+
+            # Create and start mapping model in a parallel thread.
+            self.scMappingModel = SCMappingModel(self.toolConfig)
+            self.scMappingModel.set_input_queue(self.recordingModel.get_output_queue())
+            self.scMappingModel.start()
+
         elif self.state == ExperimentModel.State.Paused:
             self.state = ExperimentModel.State.Playing
             self.__playCurrentPicture()
@@ -95,6 +125,11 @@ class ExperimentModel(QObject):
 
         self.endOfStream.emit()
         self.state = ExperimentModel.State.Init
+
+        #if (self.recordingModel.thread.is_alive()):
+        #   self.recordingModel.thread.join()
+        if self.scMappingModel:
+            self.scMappingModel.stop()
 
     def cleanExperiment(self):
         self.stopScript()

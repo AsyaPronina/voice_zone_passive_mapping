@@ -13,6 +13,8 @@ import os
 
 from models.tool_config import ToolConfig
 
+from models.tool_config import ToolConfig
+
 class ConfigureTab(QWidget):
     class State(enum.Enum):
         Init = 0

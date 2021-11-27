@@ -78,6 +78,7 @@ class PreviewModel(QObject):
         if self.state == PreviewModel.State.Init:
             self.state = PreviewModel.State.Playing
             self.__playNextPicture()
+            # need to start patient display model!!
         elif self.state == PreviewModel.State.Paused:
             self.state = PreviewModel.State.Playing
             self.__playCurrentPicture()
