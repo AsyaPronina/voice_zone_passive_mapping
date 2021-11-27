@@ -33,7 +33,7 @@ Python GUI for Voice Zone Passive Mapping
 ![image](https://user-images.githubusercontent.com/15359579/143722373-25d2296d-6346-4c61-bb89-d8b253df1dde.png)
 https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel
 
-But, now it seems, that MVP should be chosed at start point.
+But, now it seems, that MVP should be chosen at start point as here is no binder implemented for MVVM.
 
 ## Map of UI and Python classes:
 ![image](https://user-images.githubusercontent.com/15359579/143721501-e13522cc-73c7-45b7-a640-50eb60271f44.png)
