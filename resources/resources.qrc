@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/logos">
+        <file>exclude.png</file>
+        <file>exclude1.png</file>
+        <file>next.png</file>
+        <file>next2.png</file>
+        <file>pause.png</file>
+        <file>play.jpg</file>
+        <file>play.png</file>
+        <file>play2.png</file>
+    </qresource>
+    <qresource prefix="/test_images">
+        <file>mem0.jpg</file>
+        <file>mem1.jpg</file>
+        <file>mem2.jpg</file>
+        <file>new_running_man.jpg</file>
+        <file>running_man.jpg</file>
+        <file>running_man_100.jpg</file>
+        <file>running_man_200.jpg</file>
+        <file>sitting_man.png</file>
+    </qresource>
+    <qresource prefix="/gui_images">
+        <file>Picture_preview.png</file>
+    </qresource>
+</RCC>

@@ -1,12 +1,15 @@
 import enum
-import PyQt6
-from PyQt6 import uic, QtCore
-from PyQt6.QtWidgets import QWidget, QStyleOption, QStyle, QFileDialog, QMenu
-from PyQt6.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QIcon, QPixmap, QFont, QAction
-from PyQt6.QtCore import QRectF, QPointF, pyqtSlot
+import PyQt5
+from PyQt5 import uic, QtCore
+from PyQt5.QtWidgets import QWidget, QStyleOption, QStyle, QFileDialog, QMenu, QAction
+from PyQt5.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QIcon, QPixmap, QFont
+from PyQt5.QtCore import QRectF, QPointF, pyqtSlot
+
+from resources import resources
 
 import json
 import ntpath
+import os
 
 from models.tool_config import ToolConfig
 
@@ -30,9 +33,9 @@ class ConfigureTab(QWidget):
         self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         self.setAttribute(QtCore.Qt.WidgetAttribute.WA_OpaquePaintEvent, True)
         self.autoFillBackground()
-        self.setWindowFlags(QtCore.Qt.WindowFlags.Window)
+        self.setWindowFlags(QtCore.Qt.WindowType.Window)
         self.setWindowOpacity(1.0)
-        self.setWindowFlags(QtCore.Qt.WindowFlags.FramelessWindowHint)
+        self.setWindowFlags(QtCore.Qt.WindowType.FramelessWindowHint)
         self.resize(1000, 600)
 
         self.layout().setSpacing(20)
@@ -43,12 +46,12 @@ class ConfigureTab(QWidget):
 
         self.cfgScriptLabel.setText("Configure " + self.settingName + " script")
 
-        self.picturesListWidget.setContextMenuPolicy(PyQt6.QtCore.Qt.ContextMenuPolicy.CustomContextMenu)
+        self.picturesListWidget.setContextMenuPolicy(PyQt5.QtCore.Qt.ContextMenuPolicy.CustomContextMenu)
         self.picturesListWidget.customContextMenuRequested.connect(lambda pos : self.showContextMenu(pos))
 
-        self.buttonsLayout.setAlignment(self.playButton, QtCore.Qt.Alignment.AlignVCenter | QtCore.Qt.Alignment.AlignRight)
-        self.buttonsLayout.setAlignment(self.nextButton, QtCore.Qt.Alignment.AlignCenter)
-        self.buttonsLayout.setAlignment(self.excludeButton, QtCore.Qt.Alignment.AlignVCenter | QtCore.Qt.Alignment.AlignLeft)
+        self.buttonsLayout.setAlignment(self.playButton, QtCore.Qt.AlignmentFlag.AlignVCenter | QtCore.Qt.AlignmentFlag.AlignRight)
+        self.buttonsLayout.setAlignment(self.nextButton, QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.buttonsLayout.setAlignment(self.excludeButton, QtCore.Qt.AlignmentFlag.AlignVCenter | QtCore.Qt.AlignmentFlag.AlignLeft)
         self.buttonsLayout.setSpacing(7)
         self.buttonsLayout.setStretch(0, 9)
         self.buttonsLayout.setStretch(1, 0)
@@ -77,18 +80,18 @@ class ConfigureTab(QWidget):
                             }"""
         self.playButton.setStyleSheet(circleButtonSS)
         self.playButton.setMinimumSize(50, 50)
-        self.playButton.setIcon(QIcon(r'resources/play.png'))
-        self.playButton.setIconSize(PyQt6.QtCore.QSize(50, 50))
+        self.playButton.setIcon(QIcon(r':/logos/play.png'))
+        self.playButton.setIconSize(PyQt5.QtCore.QSize(50, 50))
 
         self.nextButton.setStyleSheet(circleButtonSS)
         self.nextButton.setMinimumSize(50, 50)
-        self.nextButton.setIcon(QIcon(r'resources/next.png'))
-        self.nextButton.setIconSize(PyQt6.QtCore.QSize(50, 50))
+        self.nextButton.setIcon(QIcon(r':/logos/next.png'))
+        self.nextButton.setIconSize(PyQt5.QtCore.QSize(50, 50))
 
         self.excludeButton.setStyleSheet(circleButtonSS)
         self.excludeButton.setMinimumSize(120, 50)
-        self.excludeButton.setIcon(QIcon(r'resources/exclude.png'))
-        self.excludeButton.setIconSize(PyQt6.QtCore.QSize(40, 40))
+        self.excludeButton.setIcon(QIcon(r':/logos/exclude.png'))
+        self.excludeButton.setIconSize(PyQt5.QtCore.QSize(40, 40))
 
         #"background-color: #FAFAFA; /* background color */"
         self.setStyleSheet("""QWidget { border-radius : 5px; }
@@ -140,7 +143,7 @@ class ConfigureTab(QWidget):
         self.picturesListWidget.itemClicked.connect(self.pictureSelected)
         self.timeoutSpinBox.valueChanged.connect(self.timeoutSpinBoxValueChanged)
 
-        self.previewPixmap = self.picturePreview.pixmap()
+        self.previewPixmap = QPixmap(r':/gui_images/Picture_preview.png')
 
         self.viewmodel = viewmodel
         self.viewmodel.paused.connect(self.handlePaused)
@@ -174,7 +177,7 @@ class ConfigureTab(QWidget):
         labels = []
         images = config['images']
         for key, value in images.items():
-            pictures.append(key)
+            pictures.append(str(os.path.abspath(key)))
             labels.append(value)
 
         self.viewmodel.handleBrowseButton(pictures, labels, timeout)
@@ -200,7 +203,7 @@ class ConfigureTab(QWidget):
     def showContextMenu(self, pos):
         globalPos = self.picturesListWidget.mapToGlobal(pos)
         item = self.picturesListWidget.itemAt(pos)
-        if not (item.flags() & PyQt6.QtCore.Qt.ItemFlags.ItemIsEnabled):
+        if not (item.flags() & PyQt5.QtCore.Qt.ItemFlag.ItemIsEnabled):
             print("here")
             menu = QMenu()
             menu.setStyleSheet(
@@ -221,7 +224,7 @@ class ConfigureTab(QWidget):
         print(self.picturesListWidget.itemAt(pos).text())
         self.viewmodel.handleReturnPictureBackAction(self.picturesListWidget.indexAt(pos).row())
         item = self.picturesListWidget.itemAt(pos)
-        item.setFlags(item.flags() | PyQt6.QtCore.Qt.ItemFlags.ItemIsEnabled)
+        item.setFlags(item.flags() | PyQt5.QtCore.Qt.ItemFlag.ItemIsEnabled)
 
     @pyqtSlot()
     def timeoutSpinBoxValueChanged(self):
@@ -248,12 +251,12 @@ class ConfigureTab(QWidget):
             row = self.picturesListWidget.row(item)
             print("Removing item: ", row)
             self.viewmodel.handleExcludeButton()
-            item.setFlags(item.flags() & ~PyQt6.QtCore.Qt.ItemFlags.ItemIsEnabled)
+            item.setFlags(item.flags() & ~PyQt5.QtCore.Qt.ItemFlag.ItemIsEnabled)
         
     @pyqtSlot()
     def handlePlaying(self):
         print("configure tab: playing")
-        self.playButton.setIcon(QIcon(r'resources/pause.png'))
+        self.playButton.setIcon(QIcon(r':/logos/pause.png'))
         #self.perSecTimer.start()
         self.state = ConfigureTab.State.Playing
 
@@ -283,7 +286,7 @@ class ConfigureTab(QWidget):
     @pyqtSlot()
     def handlePaused(self):
         print("configure tab: pause")
-        self.playButton.setIcon(QIcon(r'resources/play.png'))
+        self.playButton.setIcon(QIcon(r':/logos/play.png'))
         
         # interval = self.perSecTimer.remainingTime()
         # self.perSecTimer.setInterval(interval)
@@ -294,7 +297,7 @@ class ConfigureTab(QWidget):
     @pyqtSlot()
     def handleEndOfStream(self):
         print('configure tab: no pictures left, end of stream')
-        self.playButton.setIcon(QIcon(r'resources/play.png'))
+        self.playButton.setIcon(QIcon(r':/logos/play.png'))
         self.state = ConfigureTab.State.Init
         #self.secondsForPicture = self.viewmodel.timeout()
         #self.updateTimerLabel(0)
@@ -309,7 +312,7 @@ class ConfigureTab(QWidget):
         opt = QStyleOption()
         opt.initFrom(self)
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.RenderHints.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
         pen = QPen(QColor(8553090), 0.5)
         #pen = QPen(QColor(8553090), 1)
@@ -338,13 +341,15 @@ class ConfigureTab(QWidget):
     def resizeEvent(self, event):
         rect = self.layout().cellRect(2, 2)
 
-        self.picturePreview.setPixmap(self.adjustPixmapToRectSize(self.previewPixmap, rect))
+        pixmap = self.adjustPixmapToRectSize(self.previewPixmap, rect)
+        if pixmap:
+            self.picturePreview.setPixmap(pixmap)
 
     def adjustPixmapToRectSize(self, pixmap, rect):
         rect.adjust(15, 15, -15, -15)
 
-        if pixmap != None:
-            return pixmap.scaled(rect.size(), PyQt6.QtCore.Qt.AspectRatioMode.KeepAspectRatio,
-                                              PyQt6.QtCore.Qt.TransformationMode.SmoothTransformation)
+        if pixmap:
+            return pixmap.scaled(rect.size(), PyQt5.QtCore.Qt.AspectRatioMode.KeepAspectRatio,
+                                              PyQt5.QtCore.Qt.TransformationMode.SmoothTransformation)
 
         return None

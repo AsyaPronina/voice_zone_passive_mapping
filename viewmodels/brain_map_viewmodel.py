@@ -2,7 +2,7 @@ import random
 
 from numpy import matrix
 
-from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
+from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
 
 class BrainMapViewModel(QObject):
     model = None

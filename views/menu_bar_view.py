@@ -5,10 +5,10 @@ from viewmodels.configure_script_viewmodel import ConfigureScriptViewModel
 
 from viewmodels.configure_viewmodel import ConfigureViewModel
 
-from PyQt6 import uic, QtCore
-from PyQt6.QtWidgets import QWidget, QPushButton, QTextEdit, QSizePolicy, QHBoxLayout, QMenu
-from PyQt6.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QRegion, QIcon, QAction
-from PyQt6.QtCore import QRect, QRectF, QSize, pyqtSlot
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QMenu, QAction
+from PyQt5.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette
+from PyQt5.QtCore import QRectF, pyqtSlot
 
 from configure_view import ConfigureView
 
@@ -57,7 +57,7 @@ class MenuBarView(QWidget):
         configure.triggered.connect(self.configureExperiment)
         menu.addAction(configure)
         self.fileMenuButton.setMenu(menu)
-        horizontalLayout.addWidget(self.fileMenuButton, 0, QtCore.Qt.Alignment.AlignLeft | QtCore.Qt.Alignment.AlignVCenter)
+        horizontalLayout.addWidget(self.fileMenuButton, 0, QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignVCenter)
 
         self.closeButton = QPushButton("X")
         self.closeButton.setMinimumSize(20, 20)
@@ -78,7 +78,7 @@ class MenuBarView(QWidget):
                 border-width: 1px;
             }
             """)
-        horizontalLayout.addWidget(self.closeButton, 1, QtCore.Qt.Alignment.AlignRight | QtCore.Qt.Alignment.AlignVCenter)
+        horizontalLayout.addWidget(self.closeButton, 1, QtCore.Qt.AlignmentFlag.AlignRight | QtCore.Qt.AlignmentFlag.AlignVCenter)
 
         horizontalLayout.setContentsMargins(20, 2, 10, 2)
         self.setLayout(horizontalLayout)
@@ -89,7 +89,7 @@ class MenuBarView(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.RenderHints.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
         pen = QPen(QColor(8553090), 0.5)
         painter.setPen(pen)

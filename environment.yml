@@ -5,8 +5,8 @@ channels:
 
 dependencies:
   - python=3.9
+  - pip
   - pip:
     - numpy
-    - PyQt6==6.0.3
+    - PyQt5==5.12.3
     - sortedcontainers
-  

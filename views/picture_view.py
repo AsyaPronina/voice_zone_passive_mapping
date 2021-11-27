@@ -1,8 +1,8 @@
-import PyQt6
-from PyQt6 import uic
-from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QStyle, QStyleOption, QSizePolicy
-from PyQt6.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QRegion, QPixmap
-from PyQt6.QtCore import QRect, QRectF, QSize, QMargins, QTimer, pyqtSlot
+import PyQt5
+from PyQt5 import uic
+from PyQt5.QtWidgets import QWidget, QLabel, QPushButton, QStyle, QStyleOption, QSizePolicy
+from PyQt5.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QRegion, QPixmap
+from PyQt5.QtCore import QRect, QRectF, QSize, QMargins, QTimer, pyqtSlot
 
 import enum
 
@@ -24,11 +24,11 @@ class PictureView(QWidget):
         self.setPalette(pal)
 
         self.pictureLabel.setUpdatesEnabled(True)
-        self.pictureLabel.setAlignment(PyQt6.QtCore.Qt.Alignment.AlignTop | PyQt6.QtCore.Qt.Alignment.AlignHCenter)
+        self.pictureLabel.setAlignment(PyQt5.QtCore.Qt.AlignmentFlag.AlignTop | PyQt5.QtCore.Qt.AlignmentFlag.AlignHCenter)
         self.pixmap = None
 
         self.timerLabel = QLabel()
-        self.horizontalLayout.addWidget(self.timerLabel, 1, PyQt6.QtCore.Qt.Alignment.AlignCenter)
+        self.horizontalLayout.addWidget(self.timerLabel, 1, PyQt5.QtCore.Qt.AlignmentFlag.AlignCenter)
         self.horizontalLayout.setContentsMargins(5, 10, 5, 5)
         self.timerLabel.setContentsMargins(5, 5, 5, 5)
         self.timerLabel.setUpdatesEnabled(True)
@@ -42,7 +42,7 @@ class PictureView(QWidget):
 
         # margins are set by designer, but it is better to set them via Style
 
-        #vm.nextPicture.connect(self.handleNextPicture) ?? PyQt6.QtCore.Qt.ConnectionType.QueuedConnection
+        #vm.nextPicture.connect(self.handleNextPicture) ?? PyQt5.QtCore.Qt.ConnectionType.QueuedConnection
         #this will be remote timer from remote host in future.  
         self.viewmodel = viewmodel
         self.viewmodel.timeoutUpdated.connect(self.handleTimeoutUpdated)
@@ -53,7 +53,7 @@ class PictureView(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.RenderHints.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
         pen = QPen(QColor(8553090), 0.5)
         painter.setPen(pen)
@@ -164,6 +164,6 @@ class PictureView(QWidget):
         rect.adjust(15, 15, -15, -15)
 
         if self.pixmap:
-            scaledPixmap = self.pixmap.scaled(rect.size(), PyQt6.QtCore.Qt.AspectRatioMode.KeepAspectRatio,
-                                                           PyQt6.QtCore.Qt.TransformationMode.SmoothTransformation)
+            scaledPixmap = self.pixmap.scaled(rect.size(), PyQt5.QtCore.Qt.AspectRatioMode.KeepAspectRatio,
+                                                           PyQt5.QtCore.Qt.TransformationMode.SmoothTransformation)
             self.pictureLabel.setPixmap(scaledPixmap)

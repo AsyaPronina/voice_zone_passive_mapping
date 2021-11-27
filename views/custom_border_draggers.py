@@ -1,8 +1,8 @@
-from PyQt6 import QtGui, QtCore
-from PyQt6.QtWidgets import QApplication, QWidget, QLineEdit
-from PyQt6.QtWidgets import QPushButton, QTextEdit, QGridLayout, QHBoxLayout, QFrame, QStyle, QStyleOption
-from PyQt6.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QRegion
-from PyQt6.QtCore import QRect, QRectF, QSize, QPoint, QEvent
+from PyQt5 import QtGui, QtCore
+from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit
+from PyQt5.QtWidgets import QPushButton, QTextEdit, QGridLayout, QHBoxLayout, QFrame, QStyle, QStyleOption
+from PyQt5.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QRegion
+from PyQt5.QtCore import QRect, QRectF, QSize, QPoint, QEvent
 
 # Hope this will not affect performance much.
 class BorderDragger:
@@ -32,7 +32,7 @@ class CornerDragger(BorderDragger):
 
 class LeftDragger(BorderDragger):
     def isActive(self, pos, framerect, borderWidth):
-        return framerect.contains(pos.toPoint()) and \
+        return framerect.contains(pos) and \
                 pos.x() >= framerect.x() and \
                 pos.x() <= framerect.x() + borderWidth
 
@@ -44,7 +44,7 @@ class LeftDragger(BorderDragger):
 
 class RightDragger(BorderDragger):
     def isActive(self, pos, framerect, borderWidth):
-        return framerect.contains(pos.toPoint()) and \
+        return framerect.contains(pos) and \
                 pos.x() >= framerect.x() + framerect.width() - borderWidth and \
                 pos.x() <= framerect.x() + framerect. width()
 
@@ -56,7 +56,7 @@ class RightDragger(BorderDragger):
 
 class TopDragger(BorderDragger):
     def isActive(self, pos, framerect, borderWidth):
-        return framerect.contains(pos.toPoint()) and \
+        return framerect.contains(pos) and \
                 pos.y() >= framerect.y() and \
                 pos.y() <= framerect.y() + borderWidth
 
@@ -68,7 +68,7 @@ class TopDragger(BorderDragger):
 
 class BottomDragger(BorderDragger):
     def isActive(self, pos, framerect, borderWidth):
-        return framerect.contains(pos.toPoint()) and \
+        return framerect.contains(pos) and \
                 pos.y() >= framerect.y() + framerect.height() - borderWidth and \
                 pos.y() <= framerect.y() + framerect.height()
 

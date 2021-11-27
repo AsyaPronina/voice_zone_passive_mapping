@@ -1,5 +1,7 @@
-import sys
-from PyQt6.QtCore import QObject, QTimer, pyqtSignal, pyqtSlot
+from PyQt5.QtCore import QObject, QTimer, pyqtSignal, pyqtSlot
+
+from resources import resources
+
 import enum
 
 # InitState -> pyqtSignal INIT to unblock all buttons in all views.
@@ -12,11 +14,11 @@ class ExperimentModel(QObject):
 
     state = State.Init
 
-    pictures = [r'resources/new_running_man.jpg', \
-                r'resources/sitting_man.png', \
-                r'resources/mem0.jpg', \
-                r'resources/mem1.jpg', \
-                r'resources/mem2.jpg']
+    pictures = [r':/test_images/new_running_man.jpg', \
+                r':/test_images/sitting_man.png', \
+                r':/test_images/mem0.jpg', \
+                r':/test_images/mem1.jpg', \
+                r':/test_images/mem2.jpg']
     labels = ['label1', 'label2', 'label3', 'label4', 'label5']
     activePicturePath = None
     activePictureLabel = None

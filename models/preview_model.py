@@ -1,5 +1,5 @@
 import sys
-from PyQt6.QtCore import QObject, QTimer, pyqtSignal, pyqtSlot, QThread
+from PyQt5.QtCore import QObject, QTimer, pyqtSignal, pyqtSlot, QThread
 from threading import Thread
 import enum
 import time

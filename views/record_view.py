@@ -1,7 +1,7 @@
-from PyQt6 import uic
-from PyQt6.QtWidgets import QWidget, QPushButton, QTextEdit
-from PyQt6.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QRegion, QIcon, QFont, QFontMetrics
-from PyQt6.QtCore import Qt, QLine, QRect, QRectF, QSize, QPointF, QTime, pyqtSlot
+from PyQt5 import uic
+from PyQt5.QtWidgets import QWidget, QPushButton, QTextEdit
+from PyQt5.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QRegion, QIcon, QFont, QFontMetrics
+from PyQt5.QtCore import Qt, QLine, QRect, QRectF, QSize, QPointF, QTime, pyqtSlot
 
 class RecordView(QWidget):
     def __init__(self, number, label):
@@ -24,7 +24,7 @@ class RecordView(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.RenderHints.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
         pen = QPen(QColor(0), 0.2)
         painter.setPen(pen)

@@ -1,10 +1,8 @@
 import sys
-import enum
-from PyQt6 import QtGui, uic, QtCore
-from PyQt6.QtWidgets import QApplication, QWidget, QLineEdit, QMenu
-from PyQt6.QtWidgets import QPushButton, QMenuBar, QTextEdit, QGridLayout, QHBoxLayout, QFrame, QStyle, QStyleOption, QSizePolicy
-from PyQt6.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QRegion, QPixmap, QIcon, QAction
-from PyQt6.QtCore import QRect, QRectF, QSize, QPoint, QMargins, QTimer, pyqtSlot
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import QGridLayout, QSizePolicy
+from PyQt5.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor
+from PyQt5.QtCore import QRectF, QSize
 
 from frameless_widget import FramelessWidget
 
@@ -24,9 +22,9 @@ class DoctorView(FramelessWidget):
         self.state = FramelessWidget.State.Init
 
         self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
-        self.setWindowFlags(QtCore.Qt.WindowFlags.Window)
+        self.setWindowFlags(QtCore.Qt.WindowType.Window)
         self.setWindowOpacity(1.0)
-        self.setWindowFlags(QtCore.Qt.WindowFlags.FramelessWindowHint)
+        self.setWindowFlags(QtCore.Qt.WindowType.FramelessWindowHint)
         self.setBorderMargin(5)
         self.setCornerMargin(20)
         self.resize(600, 400)
@@ -46,7 +44,7 @@ class DoctorView(FramelessWidget):
         # !!!!!!!!!!!!!!!!!!!!! FIX Fix that each view handles "setMinimumSize" itself.
         # I think setMinimumSize should be handled here.
         recordsView.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        # QtCore.Qt.Alignment.AlignCenter) ?
+        # QtCore.Qt.AlignmentFlag.AlignCenter) ?
         recordsView.setMinimumSize(QSize(300, 200))
         layout.addWidget(recordsView, 1, 0)
 
@@ -77,7 +75,7 @@ class DoctorView(FramelessWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.RenderHints.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
         pen = QPen(QColor(8553090), 1)
         cursorShape = self.cursor().shape()
@@ -106,5 +104,5 @@ class DoctorView(FramelessWidget):
         sys.exit()
 
     def keyPressEvent(self, event):
-        if event.keyCombination().key() == QtCore.Qt.Key.Key_Escape:
+        if event.key() == QtCore.Qt.Key.Key_Escape:
             self.close()

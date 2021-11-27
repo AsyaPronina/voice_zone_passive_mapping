@@ -1,8 +1,8 @@
-import PyQt6
-from PyQt6 import uic, QtWidgets
-from PyQt6.QtWidgets import QGridLayout, QWidget, QPushButton, QLabel, QStyle, QStyleOption, QSizePolicy, QGraphicsScene, QGraphicsView
-from PyQt6.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QFont
-from PyQt6.QtCore import Qt, QRect, QRectF, QSize, QPointF, pyqtSlot
+import PyQt5
+from PyQt5 import uic, QtWidgets
+from PyQt5.QtWidgets import QGridLayout, QWidget, QPushButton, QLabel, QStyle, QStyleOption, QSizePolicy, QGraphicsScene, QGraphicsView
+from PyQt5.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QFont
+from PyQt5.QtCore import Qt, QRect, QRectF, QSize, QPointF, pyqtSlot
 
 import numpy as np
 
@@ -124,7 +124,7 @@ class BrainMapView(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.RenderHints.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
         pen = QPen(QColor(8553090), 0.5)
         painter.setPen(pen)

@@ -1,8 +1,10 @@
 import enum
-from PyQt6 import uic
-from PyQt6.QtWidgets import QWidget, QPushButton, QTextEdit, QSizePolicy
-from PyQt6.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QRegion, QIcon
-from PyQt6.QtCore import QRect, QRectF, QSize, pyqtSlot, pyqtSignal
+from PyQt5 import uic
+from PyQt5.QtWidgets import QWidget, QPushButton, QTextEdit, QSizePolicy
+from PyQt5.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QRegion, QIcon
+from PyQt5.QtCore import QRect, QRectF, QSize, pyqtSlot, pyqtSignal
+
+from resources import resources
 
 # remember to get property for background equal to color of parent widget. (for qss?)
 class PlayerView(QWidget):
@@ -58,6 +60,8 @@ class PlayerView(QWidget):
         self.layout().setRowStretch(1, 5)
         self.layout().setRowStretch(2, 2)
 
+        self.playButton.setIcon(QIcon(r':/logos/play.png'))
+
         self.viewmodel = viewmodel
         self.viewmodel.playing.connect(self.handlePlaying)
         self.viewmodel.paused.connect(self.handlePaused)
@@ -74,7 +78,7 @@ class PlayerView(QWidget):
     @pyqtSlot(bool)
     def on_stopButton_clicked(self):
         #These 2 are extra, they will be done on "endOfStream" handler
-        #self.playButton.setIcon(QIcon(r'resources/play.png'))
+        #self.playButton.setIcon(QIcon(r':/logos/play.png'))
         #self.state = PlayerView.State.Init
         self.viewmodel.handleStopButton()
 
@@ -97,24 +101,24 @@ class PlayerView(QWidget):
     @pyqtSlot()
     def handlePlaying(self):
         print("player: playing")
-        self.playButton.setIcon(QIcon(r'resources/pause.png'))
+        self.playButton.setIcon(QIcon(r':/logos/pause.png'))
         self.state = PlayerView.State.Playing
 
     @pyqtSlot()
     def handlePaused(self):
         print("player: pause")
-        self.playButton.setIcon(QIcon(r'resources/play.png'))
+        self.playButton.setIcon(QIcon(r':/logos/play.png'))
         self.state = PlayerView.State.Paused
 
     @pyqtSlot()
     def handleEndOfStream(self):
         print("player: end of stream")
-        self.playButton.setIcon(QIcon(r'resources/play.png'))
+        self.playButton.setIcon(QIcon(r':/logos/play.png'))
         self.state = PlayerView.State.Init
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.RenderHints.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
         pen = QPen(QColor(8553090), 0.5)
         painter.setPen(pen)

@@ -538,7 +538,7 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../resources/play.png</normaloff>../resources/play.png</iconset>
+         <normaloff>../:/logos/play.png</normaloff>../:/logos/play.png</iconset>
        </property>
        <property name="iconSize">
         <size>

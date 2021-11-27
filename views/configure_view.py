@@ -1,12 +1,7 @@
-import enum
-import PyQt6
-from PyQt6 import uic, QtCore
-from PyQt6.QtWidgets import QHBoxLayout, QWidget, QPushButton, QTextEdit, QSizePolicy, QGridLayout, QMenu, QStyleOption, QStyle, QFileDialog
-from PyQt6.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QRegion, QIcon, QAction, QPixmap
-from PyQt6.QtCore import QRect, QRectF, QLineF, QPointF, QSize, pyqtSlot
-
-import json
-import ntpath
+from PyQt5 import uic, QtCore
+from PyQt5.QtWidgets import QHBoxLayout, QPushButton, QSizePolicy, QStyleOption, QStyle
+from PyQt5.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor
+from PyQt5.QtCore import QRectF, QSize, pyqtSlot
 
 from frameless_widget import FramelessWidget
 from configure_tab import ConfigureTab
@@ -24,9 +19,9 @@ class ConfigureView(FramelessWidget):
         self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         self.setAttribute(QtCore.Qt.WidgetAttribute.WA_OpaquePaintEvent, True)
         self.autoFillBackground()
-        self.setWindowFlags(QtCore.Qt.WindowFlags.Window)
+        self.setWindowFlags(QtCore.Qt.WindowType.Window)
         self.setWindowOpacity(1.0)
-        self.setWindowFlags(QtCore.Qt.WindowFlags.FramelessWindowHint)
+        self.setWindowFlags(QtCore.Qt.WindowType.FramelessWindowHint)
         self.setBorderMargin(5)
         self.setCornerMargin(20)
         self.resize(1000, 600)
@@ -41,7 +36,7 @@ class ConfigureView(FramelessWidget):
         self.objectsTab = ConfigureTab(toolConfig, self.objectsViewModel, 1, "Objects")
         self.actionsTab.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.objectsTab.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        # QtCore.Qt.Alignment.AlignCenter) ?
+        # QtCore.Qt.AlignmentFlag.AlignCenter) ?
         self.actionsTab.setMinimumSize(QSize(1000, 600))
         self.objectsTab.setMinimumSize(QSize(1000, 600))
         self.cfgGridLayout.addWidget(self.objectsTab, 0, 0)
@@ -60,9 +55,9 @@ class ConfigureView(FramelessWidget):
             switcher.setMinimumSize(100, 25)
             switcher.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
             switcher.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
-            switcher.setWindowFlags(QtCore.Qt.WindowFlags.FramelessWindowHint)
+            switcher.setWindowFlags(QtCore.Qt.WindowType.FramelessWindowHint)
             switcher.setStyleSheet(switcherSS)
-            self.tabsLayout.addWidget(switcher, i, QtCore.Qt.Alignment.AlignTop | QtCore.Qt.Alignment.AlignLeft)
+            self.tabsLayout.addWidget(switcher, i, QtCore.Qt.AlignmentFlag.AlignTop | QtCore.Qt.AlignmentFlag.AlignLeft)
         self.tabsLayout.setSpacing(0)
         self.tabsLayout.setContentsMargins(2, 5, 0, 0)
         self.cfgGridLayout.addLayout(self.tabsLayout, 0, 0)
@@ -91,9 +86,9 @@ class ConfigureView(FramelessWidget):
 
         self.applyButton.setStyleSheet(applyCancelButtonSS)
         self.cancelButton.setStyleSheet(applyCancelButtonSS)
-        #self.applyCancelLayout.setAlignment(self.applyButton, QtCore.Qt.Alignment.AlignVCenter | QtCore.Qt.Alignment.AlignRight)
+        #self.applyCancelLayout.setAlignment(self.applyButton, QtCore.Qt.AlignmentFlag.AlignVCenter | QtCore.Qt.AlignmentFlag.AlignRight)
         self.applyButton.setMinimumSize(100, 23)
-        #self.applyCancelLayout.setAlignment(self.cancelButton, QtCore.Qt.Alignment.AlignVCenter | QtCore.Qt.Alignment.AlignLeft)
+        #self.applyCancelLayout.setAlignment(self.cancelButton, QtCore.Qt.AlignmentFlag.AlignVCenter | QtCore.Qt.AlignmentFlag.AlignLeft)
         self.cancelButton.setMinimumSize(100, 23)
 
         self.viewmodel = viewmodel
@@ -148,7 +143,7 @@ class ConfigureView(FramelessWidget):
         opt = QStyleOption()
         opt.initFrom(self)
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.RenderHints.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
         pen = QPen(QColor(8553090), 1)
         cursorShape = self.cursor().shape()
@@ -179,5 +174,7 @@ class ConfigureView(FramelessWidget):
         self.style().drawPrimitive(QStyle.PrimitiveElement.PE_Widget, opt, painter, self)
 
     def keyPressEvent(self, event):
-        if event.keyCombination().key() == QtCore.Qt.Key.Key_Escape:
+        if event.key() == QtCore.Qt.Key.Key_Escape:
+            self.viewmodel.handleCancelButton()
+            self.actionsViewModel.cleanPreview()
             self.close()

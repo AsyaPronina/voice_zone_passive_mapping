@@ -1,9 +1,9 @@
 import enum
-from PyQt6 import QtGui, QtCore
-from PyQt6.QtWidgets import QApplication, QWidget, QLineEdit
-from PyQt6.QtWidgets import QPushButton, QTextEdit, QGridLayout, QHBoxLayout, QFrame, QStyle, QStyleOption
-from PyQt6.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QRegion, QMouseEvent, QHoverEvent
-from PyQt6.QtCore import QRect, QRectF, QSize, QPoint, QEvent, QMargins
+from PyQt5 import QtGui, QtCore
+from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit
+from PyQt5.QtWidgets import QPushButton, QTextEdit, QGridLayout, QHBoxLayout, QFrame, QStyle, QStyleOption
+from PyQt5.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette, QRegion, QMouseEvent, QHoverEvent
+from PyQt5.QtCore import QRect, QRectF, QSize, QPoint, QEvent, QMargins
 
 from custom_border_draggers import LeftDragger, RightDragger, TopDragger, BottomDragger
 from custom_border_draggers import TopLeftDragger, TopRightDragger, BottomLeftDragger, BottomRightDragger 
@@ -35,7 +35,7 @@ class FramelessWidget(QWidget):
         if not target:
             self.target = self
         self.target.setMouseTracking(True)
-        self.target.setWindowFlags(QtCore.Qt.WindowFlags.FramelessWindowHint)
+        self.target.setWindowFlags(QtCore.Qt.WindowType.FramelessWindowHint)
         self.target.setAttribute(QtCore.Qt.WidgetAttribute.WA_Hover)
         self.target.installEventFilter(self)
 
@@ -79,10 +79,10 @@ class FramelessWidget(QWidget):
             return super().eventFilter(o, e)
 
     def mousePress(self, event):
-        if event.buttons() == QtCore.Qt.MouseButtons.LeftButton:
+        if event.buttons() == QtCore.Qt.MouseButton.LeftButton:
             self.leftButtonPressed = True
 
-            self.activeBorderDragger = self.selectActiveBorderDragger(event.globalPosition())
+            self.activeBorderDragger = self.selectActiveBorderDragger(event.globalPos())
 
             if self.activeBorderDragger is not None:
                 self.state = FramelessWidget.State.Resizing
@@ -91,18 +91,18 @@ class FramelessWidget(QWidget):
                                                              self.borderMargin, \
                                                              self.borderMargin, \
                                                              self.borderMargin)) \
-                    .contains(event.position().toPoint()):
+                    .contains(event.pos()):
                 self.state = FramelessWidget.State.Moving
                 self.target.update()
-                self.wholeWidgetDragPos = event.position()
+                self.wholeWidgetDragPos = event.pos()
 
     def mouseMove(self, event):
         if self.leftButtonPressed:
             if self.state == FramelessWidget.State.Moving:
-                self.target.move((event.globalPosition() - self.wholeWidgetDragPos).toPoint())
+                self.target.move((event.globalPos() - self.wholeWidgetDragPos))
             elif self.state == FramelessWidget.State.Resizing:
                 rect = self.target.frameGeometry()
-                self.activeBorderDragger.updateGeometry(rect, event.globalPosition())
+                self.activeBorderDragger.updateGeometry(rect, event.globalPos())
 
                 if rect.width() <= self.target.minimumSize().width():
                     rect.setLeft(self.target.frameGeometry().x())
@@ -112,7 +112,7 @@ class FramelessWidget(QWidget):
                 self.target.setGeometry(rect)
 
     def mouseHover(self, event):
-        self.updateCursorShape(self.target.mapToGlobal(event.position()))
+        self.updateCursorShape(self.target.mapToGlobal(event.pos()))
 
     def mouseLeave(self, event):
         self.target.unsetCursor()

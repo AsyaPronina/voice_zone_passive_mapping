@@ -1,10 +1,10 @@
 import time
 
-import PyQt6
-from PyQt6 import uic
-from PyQt6.QtWidgets import QWidget, QListWidget, QListWidgetItem, QHBoxLayout, QPushButton, QTextEdit
-from PyQt6.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette
-from PyQt6.QtCore import QRect, QRectF, QSize, QPoint, QTimer, QTime, pyqtSlot
+import PyQt5
+from PyQt5 import uic
+from PyQt5.QtWidgets import QWidget, QListWidget, QListWidgetItem, QHBoxLayout, QPushButton, QTextEdit
+from PyQt5.QtGui import QPainter, QPainterPath, QPen, QBrush, QColor, QPalette
+from PyQt5.QtCore import QRect, QRectF, QSize, QPoint, QTimer, QTime, pyqtSlot
 
 from record_view import RecordView
 
@@ -80,7 +80,7 @@ class RecordsView(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.RenderHints.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
         pen = QPen(QColor(8553090), 0.5)
         painter.setPen(pen)

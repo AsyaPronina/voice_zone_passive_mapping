@@ -17,7 +17,7 @@ from viewmodels.picture_viewmodel import PictureViewModel
 from models.experiment_model import ExperimentModel
 from models.tool_config import ToolConfig
 
-from PyQt6.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication
 
 import os
 
