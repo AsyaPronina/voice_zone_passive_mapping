@@ -1,0 +1,12 @@
+name: voice-zone-passive-mapping-ui
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.9
+  - pip:
+    - numpy
+    - PyQt6==6.0.3
+    - sortedcontainers
+  
