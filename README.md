@@ -10,7 +10,7 @@ Python GUI for Voice Zone Passive Mapping
   git clone git@github.com:AsyaPronina/voice_zone_passive_mapping_ui.git
   ```
 - Install Miniconda on your system: https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html
-- Go to Anaconda Prompt from your "Start Menu" on Windows or from "Terminal" on Linux.
+- Go to Anaconda Prompt from your "Start Menu" on Windows or just open a new bash(to catch newly installed miniconda) on Linux.
 - In the Anaconda Prompt:
   - Go to directory of repository:
     ```bash
