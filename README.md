@@ -1,7 +1,9 @@
 # voice_zone_passive_mapping_ui
 Python GUI for Voice Zone Passive Mapping
 
->**NOTE**: Tool is developed for Windows OS! Though, it can be launched on Linux, but can contain bugs and have not nice look.
+
+>**NOTE: Tool is developed for Windows OS! Though, it can be launched on Linux, but can contain bugs and have not nice look.**
+
 
 ## How to configure enviroment for development using Miniconda:
 - Clone repository to your system:
