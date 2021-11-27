@@ -12,12 +12,14 @@ from frameless_widget import FramelessWidget
 from configure_tab import ConfigureTab
 
 class ConfigureView(FramelessWidget):
-    def __init__(self, viewmodel, actionsViewModel, objectsViewModel):
+    def __init__(self, toolConfig, viewmodel, actionsViewModel, objectsViewModel):
         super().__init__()
+
+        self.toolConfig = toolConfig
 
         self.state = FramelessWidget.State.Init
 
-        uic.loadUi(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\views\configure_view.ui', self)
+        uic.loadUi(r'views/configure_view.ui', self)
 
         self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         self.setAttribute(QtCore.Qt.WidgetAttribute.WA_OpaquePaintEvent, True)
@@ -35,8 +37,8 @@ class ConfigureView(FramelessWidget):
 
         self.actionsViewModel = actionsViewModel
         self.objectsViewModel = objectsViewModel
-        self.actionsTab = ConfigureTab(self.actionsViewModel, 0, "Actions")
-        self.objectsTab = ConfigureTab(self.objectsViewModel, 1, "Objects")
+        self.actionsTab = ConfigureTab(toolConfig, self.actionsViewModel, 0, "Actions")
+        self.objectsTab = ConfigureTab(toolConfig, self.objectsViewModel, 1, "Objects")
         self.actionsTab.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.objectsTab.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         # QtCore.Qt.Alignment.AlignCenter) ?
@@ -96,6 +98,7 @@ class ConfigureView(FramelessWidget):
 
         self.viewmodel = viewmodel
 
+    @pyqtSlot(bool)
     def onActionsButtonClicked(self):
         self.cfgGridLayout.removeWidget(self.actionsTab)
         self.actionsTab.setParent(None)
@@ -108,7 +111,6 @@ class ConfigureView(FramelessWidget):
         self.cfgGridLayout.addWidget(self.objectsTab, 0, 0)
         self.cfgGridLayout.addWidget(self.actionsTab, 0, 0)
         self.cfgGridLayout.addLayout(self.tabsLayout, 0, 0)
-
 
     @pyqtSlot(bool)
     def onObjectsButtonClicked(self):
@@ -126,6 +128,11 @@ class ConfigureView(FramelessWidget):
 
     @pyqtSlot(bool)
     def on_applyButton_clicked(self):
+        toolCfgPictures = getattr(self.toolConfig.Stimuli, 'Action' + 'Pictures')
+        toolCfgPictures.Time = self.actionsViewModel.getTimeout()
+        self.toolConfig.Presentation.Duration.Picture = self.actionsViewModel.getTimeout()
+        self.toolConfig.sync()
+
         self.viewmodel.handleApplyButton(self.actionsViewModel.getPictures(), self.actionsViewModel.getLabels(),
                                          self.actionsViewModel.getTimeout())
         self.actionsViewModel.cleanPreview()

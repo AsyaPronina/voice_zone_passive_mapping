@@ -17,6 +17,7 @@ from brain_map_view import BrainMapView
 class DoctorView(FramelessWidget):
     def __init__(self, menuBarView, recordsView, brainMapView, playerView, pictureView):
         super().__init__()
+
         layout = QGridLayout()
         self.setLayout(layout)
 

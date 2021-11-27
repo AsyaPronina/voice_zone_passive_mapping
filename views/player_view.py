@@ -19,7 +19,7 @@ class PlayerView(QWidget):
 
         self.state = PlayerView.State.Init
 
-        uic.loadUi(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\views\player_view.ui', self)
+        uic.loadUi(r'views/player_view.ui', self)
         self.setWindowOpacity(1.0);
         self.setAutoFillBackground(True)
         pal = QPalette(QColor(14079702));
@@ -74,7 +74,7 @@ class PlayerView(QWidget):
     @pyqtSlot(bool)
     def on_stopButton_clicked(self):
         #These 2 are extra, they will be done on "endOfStream" handler
-        #self.playButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\play.jpg'))
+        #self.playButton.setIcon(QIcon(r'resources/play.png'))
         #self.state = PlayerView.State.Init
         self.viewmodel.handleStopButton()
 
@@ -97,19 +97,19 @@ class PlayerView(QWidget):
     @pyqtSlot()
     def handlePlaying(self):
         print("player: playing")
-        self.playButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\pause.png'))
+        self.playButton.setIcon(QIcon(r'resources/pause.png'))
         self.state = PlayerView.State.Playing
 
     @pyqtSlot()
     def handlePaused(self):
         print("player: pause")
-        self.playButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\play.png'))
+        self.playButton.setIcon(QIcon(r'resources/play.png'))
         self.state = PlayerView.State.Paused
 
     @pyqtSlot()
     def handleEndOfStream(self):
         print("player: end of stream")
-        self.playButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\play.png'))
+        self.playButton.setIcon(QIcon(r'resources/play.png'))
         self.state = PlayerView.State.Init
 
     def paintEvent(self, event):

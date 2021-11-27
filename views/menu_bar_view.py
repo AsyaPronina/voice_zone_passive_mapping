@@ -13,8 +13,10 @@ from PyQt6.QtCore import QRect, QRectF, QSize, pyqtSlot
 from configure_view import ConfigureView
 
 class MenuBarView(QWidget):
-    def __init__(self, viewmodel):
+    def __init__(self, toolConfig, viewmodel):
         super().__init__()
+
+        self.toolConfig = toolConfig
 
         self.setWindowOpacity(1.0);
         self.setAutoFillBackground(True)
@@ -106,9 +108,10 @@ class MenuBarView(QWidget):
     def configureExperiment(self):
         print("conflgure clicked!")
         self.viewmodel.stopScript()
-        #hack
-        vm = ConfigureScriptViewModel(PreviewModel(), self.viewmodel.getModel())
-        self.window = ConfigureView(ConfigureViewModel(self.viewmodel.getModel()), vm, vm)
+
+        actVM = ConfigureScriptViewModel(PreviewModel(), self.viewmodel.getModel())
+        objVM = ConfigureScriptViewModel(PreviewModel(), self.viewmodel.getModel())
+        self.window = ConfigureView(self.toolConfig, ConfigureViewModel(self.viewmodel.getModel()), actVM, objVM)
         self.window.show()
 
     @pyqtSlot()

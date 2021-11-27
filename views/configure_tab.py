@@ -8,20 +8,24 @@ from PyQt6.QtCore import QRectF, QPointF, pyqtSlot
 import json
 import ntpath
 
+from models.tool_config import ToolConfig
+
 class ConfigureTab(QWidget):
     class State(enum.Enum):
         Init = 0
         Paused = 1
         Playing = 2
 
-    def __init__(self, viewmodel, index=0, settingName="Actions"):
+    def __init__(self, toolConfig, viewmodel, index=0, settingName="Actions"):
         super().__init__()
+
+        self.toolConfig = toolConfig
 
         self.state = ConfigureTab.State.Init
         self.index = index
         self.settingName = settingName
 
-        uic.loadUi(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\views\configure_tab.ui', self)
+        uic.loadUi(r'views/configure_tab.ui', self)
 
         self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
         self.setAttribute(QtCore.Qt.WidgetAttribute.WA_OpaquePaintEvent, True)
@@ -73,17 +77,17 @@ class ConfigureTab(QWidget):
                             }"""
         self.playButton.setStyleSheet(circleButtonSS)
         self.playButton.setMinimumSize(50, 50)
-        self.playButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\play.png'))
+        self.playButton.setIcon(QIcon(r'resources/play.png'))
         self.playButton.setIconSize(PyQt6.QtCore.QSize(50, 50))
 
         self.nextButton.setStyleSheet(circleButtonSS)
         self.nextButton.setMinimumSize(50, 50)
-        self.nextButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\next.png'))
+        self.nextButton.setIcon(QIcon(r'resources/next.png'))
         self.nextButton.setIconSize(PyQt6.QtCore.QSize(50, 50))
 
         self.excludeButton.setStyleSheet(circleButtonSS)
         self.excludeButton.setMinimumSize(120, 50)
-        self.excludeButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\exclude.png'))
+        self.excludeButton.setIcon(QIcon(r'resources/exclude.png'))
         self.excludeButton.setIconSize(PyQt6.QtCore.QSize(40, 40))
 
         #"background-color: #FAFAFA; /* background color */"
@@ -158,6 +162,11 @@ class ConfigureTab(QWidget):
             config = json.load(config_file)
 
         assert(config)
+
+        # update toolConfig pathes
+        toolCfgPictures = getattr(self.toolConfig.Stimuli, self.settingName[:-1] + 'Pictures')
+        toolCfgPictures.PathToConfig = config_file_path
+        self.toolConfig.sync()
 
         timeout = config['timeout']
 
@@ -244,7 +253,7 @@ class ConfigureTab(QWidget):
     @pyqtSlot()
     def handlePlaying(self):
         print("configure tab: playing")
-        self.playButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\pause.png'))
+        self.playButton.setIcon(QIcon(r'resources/pause.png'))
         #self.perSecTimer.start()
         self.state = ConfigureTab.State.Playing
 
@@ -274,7 +283,7 @@ class ConfigureTab(QWidget):
     @pyqtSlot()
     def handlePaused(self):
         print("configure tab: pause")
-        self.playButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\play.png'))
+        self.playButton.setIcon(QIcon(r'resources/play.png'))
         
         # interval = self.perSecTimer.remainingTime()
         # self.perSecTimer.setInterval(interval)
@@ -285,7 +294,7 @@ class ConfigureTab(QWidget):
     @pyqtSlot()
     def handleEndOfStream(self):
         print('configure tab: no pictures left, end of stream')
-        self.playButton.setIcon(QIcon(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\play.png'))
+        self.playButton.setIcon(QIcon(r'resources/play.png'))
         self.state = ConfigureTab.State.Init
         #self.secondsForPicture = self.viewmodel.timeout()
         #self.updateTimerLabel(0)

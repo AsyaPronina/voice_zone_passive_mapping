@@ -9,7 +9,7 @@ import numpy as np
 class BrainMapView(QWidget):
     def __init__(self, viewmodel):
         super().__init__()
-        uic.loadUi(r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\views\brain_map_view.ui', self)
+        uic.loadUi(r'views/brain_map_view.ui', self)
         self.setWindowOpacity(1.0)
         self.setAutoFillBackground(True)
         pal = QPalette(QColor(14079702))

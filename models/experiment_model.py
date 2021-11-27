@@ -1,8 +1,6 @@
 import sys
-from PyQt6.QtCore import QObject, QTimer, pyqtSignal, pyqtSlot, QThread
-from threading import Thread
+from PyQt6.QtCore import QObject, QTimer, pyqtSignal, pyqtSlot
 import enum
-import time
 
 # InitState -> pyqtSignal INIT to unblock all buttons in all views.
 # timeoutUpdated as a stub for now
@@ -14,7 +12,11 @@ class ExperimentModel(QObject):
 
     state = State.Init
 
-    pictures = [r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\new_running_man.jpg',r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\sitting_man.png',r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\mem0.jpg',r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\mem1.jpg',r'C:\Users\apronina\Syncplicity\Science\Markov_for_passive_ECC_of_voice_zones\voice_zone_passive_mapping\resources\mem2.jpg']
+    pictures = [r'resources/new_running_man.jpg', \
+                r'resources/sitting_man.png', \
+                r'resources/mem0.jpg', \
+                r'resources/mem1.jpg', \
+                r'resources/mem2.jpg']
     labels = ['label1', 'label2', 'label3', 'label4', 'label5']
     activePicturePath = None
     activePictureLabel = None
@@ -30,8 +32,11 @@ class ExperimentModel(QObject):
     endOfStream = pyqtSignal(name='endOfStream')
     experimentCleaned = pyqtSignal(name='experimentCleaned')
 
-    def __init__(self):
+    def __init__(self, toolConfig):
         super().__init__()
+
+        self.toolConfig = toolConfig
+
         self.__setDefaultTimerInterval()
         self.timer.setSingleShot(True)
         self.timer.timeout.connect(self.__playNextPicture)
@@ -97,7 +102,6 @@ class ExperimentModel(QObject):
         if self.state != ExperimentModel.State.Init:
             # Either we pause script or not, if we are moving to new picture, we should start with new timeout.
             # Refactor if-else logic!! It repeats logic in "__playNextPicture"!
-            # REFACTOR!!
             if self.playedPictures < len(self.pictures):
                 self.__setDefaultTimerInterval()
                 self.__updateActivePicture()
