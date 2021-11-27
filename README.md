@@ -27,3 +27,4 @@ Python GUI for Voice Zone Passive Mapping
     ```bash
     python tool.py
     ```
+    You are ready to edit it!
