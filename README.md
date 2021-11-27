@@ -39,7 +39,8 @@ https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel
 ![image](https://user-images.githubusercontent.com/15359579/143722211-7172d4b2-e819-486e-a9cd-b710f1ad728a.png)
 
 
-## Integration of mapping algorithm is WIP on the branch: _integrate_mapping_algorithm_wip_
+## Integration of mapping algorithm status:
+WIP on the branch: _integrate_mapping_algorithm_wip_
 
 ## Known issues:
 * Objects pictures are not yet handled in any view of the tool
